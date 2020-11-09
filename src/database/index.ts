@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const MONGO_URL = process.env.MONGODB_URI as string;
 
 mongoose
-.connect('mongodb+srv://jwt-auth-login:devlogin@cluster0.4gtzn.mongodb.net/test-jwt-auth',
+.connect(MONGO_URL,
 {
   useUnifiedTopology: true,
   useNewUrlParser: true
