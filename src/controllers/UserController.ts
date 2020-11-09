@@ -3,8 +3,16 @@ import UserModel from '../models/UserModel';
 
 class UserController {
   async create(req: Request, res: Response) {
+    const { email } = req.body;
+
     try {
+      if( await UserModel.findOne({ email })) {
+        return res.status(400).json({ error: 'user already exists' });
+      }
+
       const user = await UserModel.create(req.body);
+
+      user.password = undefined;
 
       return res.send({ user });
 

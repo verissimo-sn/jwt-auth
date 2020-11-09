@@ -6,7 +6,7 @@ import mongoose from '../database/index';
 interface User extends Document {
   name: string;
   email: string;
-  password: string;
+  password: string | undefined;
   createdAt: string;
 }
 
