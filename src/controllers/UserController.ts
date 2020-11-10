@@ -1,6 +1,8 @@
 import { Request, Response} from 'express';
 import UserModel from '../models/UserModel';
 
+import GenerateToken from '../utils/jwtAuth';
+
 class UserController {
   async create(req: Request, res: Response) {
     const { email } = req.body;
@@ -14,7 +16,10 @@ class UserController {
 
       user.password = '';
 
-      return res.send({ user });
+      return res.send({ 
+        user,
+        token: GenerateToken({ id: user.id })
+      });
 
     } catch(err) {
       return res.status(400).send({ error: 'Registration Faled' });

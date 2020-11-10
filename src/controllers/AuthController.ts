@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 
 import User from '../models/UserModel';
 
+import GenerateToken from '../utils/jwtAuth';
+
 class AuthController {
   async create(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -21,7 +23,10 @@ class AuthController {
 
     user.password = '';
 
-    return res.status(200).send({ user })
+    return res.status(200).send({
+      user,
+      token: GenerateToken({ id: user.id })
+    });
   }
 }
 
