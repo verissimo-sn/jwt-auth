@@ -12,7 +12,7 @@ class UserController {
 
       const user = await UserModel.create(req.body);
 
-      user.password = undefined;
+      user.password = '';
 
       return res.send({ user });
 

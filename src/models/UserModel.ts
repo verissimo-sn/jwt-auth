@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 import mongoose from '../database/index';
 
-interface User extends Document {
+export interface UserProps extends Document {
   name: string;
   email: string;
-  password: string | undefined;
+  password: string;
   createdAt: string;
 }
 
@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre<User>('save', async function(next) {
+UserSchema.pre<UserProps>('save', async function(next) {
   const hashSalt = 10;
   const hash = await bcrypt.hash(this.password, hashSalt);
 
@@ -40,6 +40,6 @@ UserSchema.pre<User>('save', async function(next) {
   next();
 });
 
-const User = mongoose.model<User>('User', UserSchema);
+const User = mongoose.model<UserProps>('User', UserSchema);
 
 export default User;
